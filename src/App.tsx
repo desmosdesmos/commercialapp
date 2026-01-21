@@ -13,8 +13,8 @@ const App = () => {
 
   // Define tabs with their properties
   const tabs = [
-    { id: 0, label: 'Главная', icon: Home },
-    { id: 1, label: 'Запись', icon: Calendar },
+    { id: 0, label: 'Услуги', icon: Scissors },
+    { id: 1, label: 'Бронь', icon: Calendar },
     { id: 2, label: 'Портфолио', icon: Image },
     { id: 3, label: 'Контакты', icon: Phone },
   ];

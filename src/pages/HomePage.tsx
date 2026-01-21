@@ -1,59 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Scissors, Image as ImageIcon, MapPin, Star, Gift } from 'lucide-react';
+import { Star, Car, Scissors, Sparkles, Shield } from 'lucide-react';
 
 const HomePage = ({ setActiveTab }: { setActiveTab: (tab: number) => void }) => {
-  // Action buttons data - mapping to app tabs
-  const actionButtons = [
+  const [carSize, setCarSize] = useState<'sedan' | 'suv' | 'large'>('sedan');
+
+  // Service data with pricing based on car size
+  const services = [
     {
       id: 1,
-      title: 'ОНЛАЙН ЗАПИСЬ',
-      subtitle: 'Забронируйте удобное время',
-      icon: Calendar,
-      gradient: 'from-purple-600 to-blue-500',
-      tab: 1 // Navigate to Booking tab
+      name: 'Полировка кузова',
+      basePrice: 5000,
+      icon: Sparkles,
+      description: 'Профессиональная полировка для восстановления блеска'
     },
     {
       id: 2,
-      title: 'УСЛУГИ',
-      subtitle: 'Посмотреть все услуги',
-      icon: Scissors,
-      gradient: 'from-blue-500 to-cyan-400',
-      tab: 1 // Navigate to Booking tab where services are shown
+      name: 'Нанесение керамики',
+      basePrice: 12000,
+      icon: Shield,
+      description: 'Защитное керамическое покрытие на 1 год'
     },
     {
       id: 3,
-      title: 'ПРИМЕРЫ РАБОТ',
-      subtitle: 'Наши лучшие работы',
-      icon: ImageIcon,
-      gradient: 'from-cyan-400 to-teal-400',
-      tab: 2 // Navigate to Portfolio tab
+      name: 'Химчистка салона',
+      basePrice: 4000,
+      icon: Car,
+      description: 'Глубокая очистка всех поверхностей салона'
     },
     {
       id: 4,
-      title: 'КОНТАКТЫ',
-      subtitle: 'Адрес и режим работы',
-      icon: MapPin,
-      gradient: 'from-teal-400 to-emerald-500',
-      tab: 3 // Navigate to Contacts tab
-    },
-    {
-      id: 5,
-      title: 'АКЦИИ И СКИДКИ',
-      subtitle: 'Специальные предложения',
-      icon: Gift,
-      gradient: 'from-emerald-500 to-green-500',
-      tab: 1 // Navigate to Booking tab where promotions might be shown
-    },
-    {
-      id: 6,
-      title: 'НАША ГАРАНТИЯ',
-      subtitle: 'Качество и надежность',
-      icon: Star,
-      gradient: 'from-green-500 to-lime-500',
-      tab: 3 // Navigate to Contacts tab where guarantee info might be
+      name: 'Стандартная мойка',
+      basePrice: 1500,
+      icon: Scissors,
+      description: 'Основная мойка кузова и колесных арок'
     }
   ];
+
+  // Calculate price based on car size
+  const calculatePrice = (basePrice: number) => {
+    switch (carSize) {
+      case 'suv': return Math.round(basePrice * 1.2);
+      case 'large': return Math.round(basePrice * 1.4);
+      default: return basePrice;
+    }
+  };
 
   return (
     <div className="px-4 pt-6 pb-24">
@@ -79,34 +70,92 @@ const HomePage = ({ setActiveTab }: { setActiveTab: (tab: number) => void }) => 
               className="glass-button bg-gradient-to-r from-purple-600 to-blue-500 text-white font-medium text-lg py-3 px-8"
               onClick={() => setActiveTab(1)} // Navigate to Booking tab
             >
-              Записаться онлайн
+              Забронировать сейчас
             </motion.button>
           </motion.div>
         </div>
       </motion.div>
 
-      {/* Action Buttons Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {actionButtons.map((button, index) => {
-          const IconComponent = button.icon;
+      {/* Loyalty Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1, duration: 0.5 }}
+        className="glass-card mb-6 p-4"
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <Star className="text-yellow-400 mr-2" size={20} />
+            <h3 className="font-semibold">Карта лояльности</h3>
+          </div>
+          <span className="text-sm bg-gradient-to-r from-purple-600 to-blue-500 px-3 py-1 rounded-full">
+            3/10 штампов
+          </span>
+        </div>
+        <div className="mt-3">
+          <div className="w-full bg-gray-700 rounded-full h-2">
+            <div
+              className="bg-gradient-to-r from-purple-500 to-blue-400 h-2 rounded-full"
+              style={{ width: '30%' }}
+            ></div>
+          </div>
+        </div>
+        <p className="text-xs text-gray-300 mt-2">Еще 2 посещения до следующего бесплатного мытья</p>
+      </motion.div>
+
+      {/* Car Size Toggle */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+        className="glass-card mb-6 p-4"
+      >
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="font-semibold">Размер автомобиля</h3>
+          <div className="flex bg-gray-800 rounded-xl p-1">
+            {(['sedan', 'suv', 'large'] as const).map((size) => (
+              <button
+                key={size}
+                onClick={() => setCarSize(size)}
+                className={`px-4 py-2 rounded-lg text-sm transition-all ${
+                  carSize === size
+                    ? 'bg-gradient-to-r from-purple-600 to-blue-500 text-white'
+                    : 'text-gray-300'
+                }`}
+              >
+                {size === 'sedan' ? 'Седан' : size === 'suv' ? 'Внедорожник' : 'Крупный'}
+              </button>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Services List */}
+      <div className="space-y-4">
+        {services.map((service, index) => {
+          const IconComponent = service.icon;
           return (
             <motion.div
-              key={button.id}
+              key={service.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * index, duration: 0.4 }}
-              whileHover={{ y: -5 }}
-              whileTap={{ scale: 0.97 }}
-              className="glass-card p-4 cursor-pointer"
-              onClick={() => setActiveTab(button.tab)}
+              transition={{ delay: 0.1 * index + 0.3, duration: 0.4 }}
+              className="glass-card p-4"
             >
-              <div className="flex items-center">
-                <div className={`p-3 rounded-2xl bg-gradient-to-r ${button.gradient} mr-4`}>
-                  <IconComponent size={24} className="text-white" />
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="p-3 rounded-2xl bg-gradient-to-r from-purple-600/20 to-blue-500/20 mr-4">
+                    <IconComponent size={20} className="text-purple-400" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">{service.name}</h3>
+                    <p className="text-xs text-gray-300">{service.description}</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-bold text-lg">{button.title}</h3>
-                  <p className="text-gray-300 text-sm">{button.subtitle}</p>
+                <div className="text-right">
+                  <p className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
+                    {calculatePrice(service.basePrice)} ₽
+                  </p>
                 </div>
               </div>
             </motion.div>
