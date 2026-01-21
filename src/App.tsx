@@ -81,35 +81,26 @@ const App = () => {
                   }`}
                 >
                   {/* Active indicator with gradient */}
-                  <div className={`absolute inset-0 rounded-2xl z-0 ${
+                  <div className={`absolute inset-0 rounded-2xl ${
                     isActive
                       ? 'bg-gradient-to-r from-purple-600/30 to-blue-500/30'
                       : 'bg-transparent'
                   }`} />
 
-                  <div className="relative z-10 flex flex-col items-center">
-                    <motion.div
-                      animate={{
-                        y: isActive ? -5 : 0,
-                        scale: isActive ? 1.1 : 1
-                      }}
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    >
+                  <div className="relative flex flex-col items-center">
+                    <div className={`transition-transform duration-300 ${
+                      isActive ? 'translate-y-[-5px] scale-110' : ''
+                    }`}>
                       <IconComponent
                         size={22}
                         className={isActive ? "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400" : "text-gray-300"}
                       />
-                    </motion.div>
-                    <motion.span
-                      className="text-xs mt-1"
-                      animate={{
-                        fontSize: isActive ? "12px" : "10px",
-                        fontWeight: isActive ? "bold" : "normal"
-                      }}
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    >
+                    </div>
+                    <span className={`text-xs mt-1 transition-all duration-300 ${
+                      isActive ? 'font-bold text-white' : 'text-gray-300'
+                    }`}>
                       {tab.label}
-                    </motion.span>
+                    </span>
                   </div>
                 </motion.button>
               );
