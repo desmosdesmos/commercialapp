@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Home, Calendar, Image, Phone } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Home, Calendar, Image, Phone, Scissors, Star, Gift } from 'lucide-react';
 
 // Import individual pages
 import HomePage from './pages/HomePage';
@@ -14,7 +14,7 @@ const App = () => {
   // Define tabs with their properties
   const tabs = [
     { id: 0, label: 'Главная', icon: Home },
-    { id: 1, label: 'Бронирование', icon: Calendar },
+    { id: 1, label: 'Запись', icon: Calendar },
     { id: 2, label: 'Портфолио', icon: Image },
     { id: 3, label: 'Контакты', icon: Phone },
   ];
@@ -36,48 +36,89 @@ const App = () => {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-neutral-950 text-white">
+    <div className="relative min-h-screen overflow-hidden bg-neutral-950 text-white max-w-md mx-auto">
       {/* Animated background with gradient orbs */}
       <div className="fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute top-[10%] left-[15%] w-64 h-64 bg-purple-500/20 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute top-[60%] right-[10%] w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-pulse-slow delay-1000"></div>
-        <div className="absolute bottom-[10%] left-[40%] w-56 h-56 bg-slate-400/20 rounded-full blur-3xl animate-pulse-slow delay-500"></div>
+        <div className="absolute top-[10%] left-[15%] w-64 h-64 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-[60%] right-[10%] w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-[10%] left-[40%] w-56 h-56 bg-slate-400/20 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 pb-24">
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3 }}
-          className="h-full"
-        >
-          {renderPage()}
-        </motion.div>
+      <div className="relative z-10 pb-28">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, x: activeTab > 0 ? 20 : -20, y: 10 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            exit={{ opacity: 0, x: activeTab > 0 ? -20 : 20, y: 10 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="h-full"
+          >
+            {renderPage()}
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      {/* Floating bottom navigation */}
+      {/* Enhanced floating bottom navigation */}
       <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-[calc(100%-2rem)] max-w-md z-20">
-        <div className="floating-nav bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl p-3">
-          {tabs.map((tab) => {
-            const IconComponent = tab.icon;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex flex-col items-center justify-center space-y-1 px-3 py-2 rounded-2xl transition-all duration-300 ${
-                  activeTab === tab.id
-                    ? 'text-white bg-gradient-to-r from-purple-600/30 to-blue-500/30 shadow-lg'
-                    : 'text-gray-300 hover:text-white'
-                }`}
-              >
-                <IconComponent size={20} />
-                <span className="text-xs">{tab.label}</span>
-              </button>
-            );
-          })}
+        <div className="glass-container bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl p-2">
+          <div className="flex justify-around items-center">
+            {tabs.map((tab) => {
+              const IconComponent = tab.icon;
+              const isActive = activeTab === tab.id;
+
+              return (
+                <motion.button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  whileTap={{ scale: 0.9 }}
+                  whileHover={{ scale: 1.05 }}
+                  className={`flex flex-col items-center justify-center space-y-1 px-3 py-3 rounded-2xl transition-all duration-300 relative ${
+                    isActive
+                      ? 'text-white'
+                      : 'text-gray-300'
+                  }`}
+                >
+                  {/* Active indicator with gradient */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeTabIndicator"
+                      className="absolute inset-0 bg-gradient-to-r from-purple-600/30 to-blue-500/30 rounded-2xl z-[-1]"
+                      initial={false}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 30
+                      }}
+                    />
+                  )}
+
+                  <motion.div
+                    animate={{
+                      y: isActive ? -5 : 0,
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  >
+                    <IconComponent
+                      size={22}
+                      className={isActive ? "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400" : ""}
+                    />
+                  </motion.div>
+                  <motion.span
+                    className="text-xs"
+                    animate={{
+                      fontSize: isActive ? "12px" : "10px",
+                      fontWeight: isActive ? "bold" : "normal"
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  >
+                    {tab.label}
+                  </motion.span>
+                </motion.button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

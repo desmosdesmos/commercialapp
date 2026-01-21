@@ -1,137 +1,116 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Star, Award, TrendingUp } from 'lucide-react';
+import { Calendar, Scissors, Image as ImageIcon, MapPin, Star, Gift } from 'lucide-react';
 
 const HomePage = () => {
-  const [carClass, setCarClass] = useState<'sedan' | 'suv' | 'jeep'>('sedan');
-
-  // Service data with pricing based on car class
-  const services = [
+  // Action buttons data
+  const actionButtons = [
     {
       id: 1,
-      name: 'Полировка кузова',
-      price: { sedan: 5000, suv: 6500, jeep: 7000 },
-      description: 'Профессиональная полировка для восстановления блеска',
-      icon: '✨'
+      title: 'ОНЛАЙН ЗАПИСЬ',
+      subtitle: 'Забронируйте удобное время',
+      icon: Calendar,
+      gradient: 'from-purple-600 to-blue-500',
+      path: '/booking'
     },
     {
       id: 2,
-      name: 'Нанесение керамики',
-      price: { sedan: 12000, suv: 15000, jeep: 16000 },
-      description: 'Защитное керамическое покрытие на 1 год',
-      icon: '🛡️'
+      title: 'УСЛУГИ',
+      subtitle: 'Посмотреть все услуги',
+      icon: Scissors,
+      gradient: 'from-blue-500 to-cyan-400',
+      path: '/services'
     },
     {
       id: 3,
-      name: 'Химчистка салона',
-      price: { sedan: 4000, suv: 5500, jeep: 6000 },
-      description: 'Глубокая очистка всех поверхностей салона',
-      icon: '🧽'
+      title: 'ПРИМЕРЫ РАБОТ',
+      subtitle: 'Наши лучшие работы',
+      icon: ImageIcon,
+      gradient: 'from-cyan-400 to-teal-400',
+      path: '/portfolio'
+    },
+    {
+      id: 4,
+      title: 'КОНТАКТЫ',
+      subtitle: 'Адрес и режим работы',
+      icon: MapPin,
+      gradient: 'from-teal-400 to-emerald-500',
+      path: '/contacts'
+    },
+    {
+      id: 5,
+      title: 'АКЦИИ И СКИДКИ',
+      subtitle: 'Специальные предложения',
+      icon: Gift,
+      gradient: 'from-emerald-500 to-green-500',
+      path: '/promotions'
+    },
+    {
+      id: 6,
+      title: 'НАША ГАРАНТИЯ',
+      subtitle: 'Качество и надежность',
+      icon: Star,
+      gradient: 'from-green-500 to-lime-500',
+      path: '/guarantee'
     }
   ];
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="px-4 pt-6 pb-24">
       {/* Hero Section */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
         className="glass-card mb-6 relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-3xl -z-10"></div>
-        <div className="text-center py-8">
-          <h1 className="text-3xl font-bold mb-2">Арт детейлинг</h1>
+        <div className="text-center py-8 px-4">
+          <h1 className="text-2xl md:text-3xl font-bold mb-2 bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            Арт детейлинг
+          </h1>
           <p className="text-gray-300 mb-6">Профессиональная забота о вашем автомобиле</p>
-          <motion.button 
-            whileTap={{ scale: 0.95 }}
-            className="glass-button bg-gradient-to-r from-purple-600 to-blue-500 text-white font-medium"
-          >
-            Записаться
-          </motion.button>
-        </div>
-      </motion.div>
-
-      {/* Loyalty Widget */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="glass-card mb-6"
-      >
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold">Уровень: Silver</h3>
-          <Award className="text-yellow-400" size={20} />
-        </div>
-        <div className="mb-2">
-          <div className="w-full bg-gray-700 rounded-full h-2">
-            <div className="bg-gradient-to-r from-purple-500 to-blue-400 h-2 rounded-full" style={{ width: '65%' }}></div>
-          </div>
-        </div>
-        <p className="text-sm text-gray-300">Еще 2 посещения до следующего бесплатного мытья</p>
-      </motion.div>
-
-      {/* Car Class Toggle */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="glass-card mb-6"
-      >
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="font-semibold">Класс автомобиля</h3>
-          <div className="flex bg-gray-800 rounded-xl p-1">
-            {(['sedan', 'suv', 'jeep'] as const).map((cls) => (
-              <button
-                key={cls}
-                onClick={() => setCarClass(cls)}
-                className={`px-4 py-2 rounded-lg text-sm transition-all ${
-                  carClass === cls 
-                    ? 'bg-gradient-to-r from-purple-600 to-blue-500 text-white' 
-                    : 'text-gray-300'
-                }`}
-              >
-                {cls === 'sedan' ? 'Седан' : cls === 'suv' ? 'Внедорожник' : 'Джип'}
-              </button>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Services Grid */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="grid grid-cols-1 gap-4"
-      >
-        {services.map((service, index) => (
           <motion.div
-            key={service.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 * index }}
-            className="glass-card flex items-center justify-between p-4"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
           >
-            <div className="flex items-center">
-              <div className="text-2xl mr-3">{service.icon}</div>
-              <div>
-                <h3 className="font-semibold">{service.name}</h3>
-                <p className="text-sm text-gray-300">{service.description}</p>
-              </div>
-            </div>
-            <motion.div 
-              key={`${service.id}-${carClass}`}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="text-right"
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              className="glass-button bg-gradient-to-r from-purple-600 to-blue-500 text-white font-medium text-lg py-3 px-8"
             >
-              <p className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
-                {service.price[carClass]} ₽
-              </p>
-            </motion.div>
+              Записаться онлайн
+            </motion.button>
           </motion.div>
-        ))}
+        </div>
       </motion.div>
+
+      {/* Action Buttons Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {actionButtons.map((button, index) => {
+          const IconComponent = button.icon;
+          return (
+            <motion.div
+              key={button.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * index, duration: 0.4 }}
+              whileHover={{ y: -5 }}
+              whileTap={{ scale: 0.97 }}
+              className="glass-card p-4"
+            >
+              <div className="flex items-center">
+                <div className={`p-3 rounded-2xl bg-gradient-to-r ${button.gradient} mr-4`}>
+                  <IconComponent size={24} className="text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-bold text-lg">{button.title}</h3>
+                  <p className="text-gray-300 text-sm">{button.subtitle}</p>
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
     </div>
   );
 };
