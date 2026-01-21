@@ -93,7 +93,7 @@ const App = () => {
                     }`}>
                       <IconComponent
                         size={22}
-                        className={isActive ? "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400" : "text-gray-300"}
+                        className={isActive ? "text-white" : "text-gray-300"}
                       />
                     </div>
                     <span className={`text-xs mt-1 transition-all duration-300 ${
