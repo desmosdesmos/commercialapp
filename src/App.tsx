@@ -87,16 +87,12 @@ const App = () => {
                       : 'bg-transparent'
                   }`} />
 
-                  <div className="relative flex flex-col items-center">
-                    <div className={`transition-transform duration-300 ${
-                      isActive ? 'translate-y-[-5px] scale-110' : ''
-                    }`}>
-                      <IconComponent
-                        size={22}
-                        className={isActive ? "text-white" : "text-gray-300"}
-                      />
-                    </div>
-                    <span className={`text-xs mt-1 transition-all duration-300 ${
+                  <div className="flex flex-col items-center justify-center">
+                    <IconComponent
+                      size={22}
+                      className={isActive ? "text-white" : "text-gray-300"}
+                    />
+                    <span className={`text-xs mt-1 ${
                       isActive ? 'font-bold text-white' : 'text-gray-300'
                     }`}>
                       {tab.label}
