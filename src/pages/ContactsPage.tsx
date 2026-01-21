@@ -14,8 +14,8 @@ const ContactsPage = () => {
         <h2 className="text-2xl font-bold mb-6 text-center">Контакты</h2>
 
         <div className="space-y-5">
-          <div className="flex items-start">
-            <div className="p-2 rounded-lg bg-gradient-to-r from-purple-600/20 to-blue-500/20 mr-4">
+          <div className="flex items-start p-4 rounded-2xl bg-gradient-to-r from-white/5 to-white/3 backdrop-blur-sm border border-white/10 mb-3">
+            <div className="p-3 rounded-xl bg-gradient-to-r from-purple-600/20 to-blue-500/20 mr-4">
               <MapPin className="text-purple-400" size={20} />
             </div>
             <div>
@@ -24,8 +24,8 @@ const ContactsPage = () => {
             </div>
           </div>
 
-          <div className="flex items-start">
-            <div className="p-2 rounded-lg bg-gradient-to-r from-purple-600/20 to-blue-500/20 mr-4">
+          <div className="flex items-start p-4 rounded-2xl bg-gradient-to-r from-white/5 to-white/3 backdrop-blur-sm border border-white/10 mb-3">
+            <div className="p-3 rounded-xl bg-gradient-to-r from-purple-600/20 to-blue-500/20 mr-4">
               <Clock className="text-purple-400" size={20} />
             </div>
             <div>
@@ -34,8 +34,8 @@ const ContactsPage = () => {
             </div>
           </div>
 
-          <div className="flex items-start">
-            <div className="p-2 rounded-lg bg-gradient-to-r from-purple-600/20 to-blue-500/20 mr-4">
+          <div className="flex items-start p-4 rounded-2xl bg-gradient-to-r from-white/5 to-white/3 backdrop-blur-sm border border-white/10 mb-4">
+            <div className="p-3 rounded-xl bg-gradient-to-r from-purple-600/20 to-blue-500/20 mr-4">
               <PhoneIcon className="text-purple-400" size={20} />
             </div>
             <div>

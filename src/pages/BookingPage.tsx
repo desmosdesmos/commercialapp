@@ -192,13 +192,10 @@ const BookingPage = () => {
                   value={formData.carBrand}
                   onChange={handleInputChange}
                   onFocus={() => {
-                    if (formData.carBrand.trim()) {
-                      const filtered = Object.keys(CAR_DATABASE).filter(brand =>
-                        brand.toLowerCase().includes(formData.carBrand.toLowerCase())
-                      );
-                      setFilteredBrands(filtered);
-                      setShowBrandSuggestions(true);
-                    }
+                    // Show all brands when input is focused
+                    const allBrands = Object.keys(CAR_DATABASE);
+                    setFilteredBrands(allBrands);
+                    setShowBrandSuggestions(true);
                   }}
                   onBlur={() => setTimeout(() => setShowBrandSuggestions(false), 200)}
                   placeholder="Введите марку или выберите из списка"
@@ -207,25 +204,43 @@ const BookingPage = () => {
                 <Car className="absolute right-3 top-3.5 text-gray-400" size={18} />
 
                 {/* Brand Suggestions Dropdown */}
-                {showBrandSuggestions && filteredBrands.length > 0 && (
-                  <div className="absolute z-10 w-full mt-1 bg-gray-800 border border-gray-700 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                    {filteredBrands.map(brand => (
-                      <div
-                        key={brand}
-                        className="p-3 hover:bg-gray-700 cursor-pointer"
-                        onClick={() => handleBrandSelect(brand)}
-                      >
-                        {brand}
+                {showBrandSuggestions && (
+                  <div className="absolute z-10 w-full mt-1 glass-card bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-xl max-h-60 overflow-y-auto">
+                    {filteredBrands.length > 0 ? (
+                      <>
+                        {filteredBrands.map(brand => (
+                          <div
+                            key={brand}
+                            className="p-4 hover:bg-white/10 cursor-pointer border-b border-white/10 last:border-b-0 transition-colors duration-200"
+                            onClick={() => handleBrandSelect(brand)}
+                          >
+                            <div className="flex items-center">
+                              <div className="p-2 rounded-lg bg-gradient-to-r from-purple-600/20 to-blue-500/20 mr-3">
+                                <Car size={16} className="text-purple-400" />
+                              </div>
+                              <span>{brand}</span>
+                            </div>
+                          </div>
+                        ))}
+                        <div
+                          className="p-4 hover:bg-white/10 cursor-pointer transition-colors duration-200"
+                          onClick={() => {
+                            setShowBrandSuggestions(false);
+                          }}
+                        >
+                          <div className="flex items-center">
+                            <div className="p-2 rounded-lg bg-gradient-to-r from-green-600/20 to-emerald-500/20 mr-3">
+                              <Sparkles size={16} className="text-green-400" />
+                            </div>
+                            <span>Использовать "{formData.carBrand}" как новую марку</span>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="p-4 text-center text-gray-400">
+                        Марки не найдены. Введите свое значение.
                       </div>
-                    ))}
-                    <div
-                      className="p-3 hover:bg-gray-700 cursor-pointer border-t border-gray-700"
-                      onClick={() => {
-                        setShowBrandSuggestions(false);
-                      }}
-                    >
-                      Использовать "{formData.carBrand}" как новую марку
-                    </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -241,12 +256,10 @@ const BookingPage = () => {
                   value={formData.carModel}
                   onChange={handleInputChange}
                   onFocus={() => {
-                    if (formData.carModel.trim() && formData.carBrand) {
+                    if (formData.carBrand) {
+                      // Show all models for the selected brand when input is focused
                       const brandModels = CAR_DATABASE[formData.carBrand as keyof typeof CAR_DATABASE] || [];
-                      const filtered = brandModels.filter(model =>
-                        model.toLowerCase().includes(formData.carModel.toLowerCase())
-                      );
-                      setFilteredModels(filtered);
+                      setFilteredModels(brandModels);
                       setShowModelSuggestions(true);
                     }
                   }}
@@ -260,25 +273,43 @@ const BookingPage = () => {
                 <Car className="absolute right-3 top-3.5 text-gray-400" size={18} />
 
                 {/* Model Suggestions Dropdown */}
-                {showModelSuggestions && filteredModels.length > 0 && (
-                  <div className="absolute z-10 w-full mt-1 bg-gray-800 border border-gray-700 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                    {filteredModels.map(model => (
-                      <div
-                        key={model}
-                        className="p-3 hover:bg-gray-700 cursor-pointer"
-                        onClick={() => handleModelSelect(model)}
-                      >
-                        {model}
+                {showModelSuggestions && (
+                  <div className="absolute z-10 w-full mt-1 glass-card bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-xl max-h-60 overflow-y-auto">
+                    {filteredModels.length > 0 ? (
+                      <>
+                        {filteredModels.map(model => (
+                          <div
+                            key={model}
+                            className="p-4 hover:bg-white/10 cursor-pointer border-b border-white/10 last:border-b-0 transition-colors duration-200"
+                            onClick={() => handleModelSelect(model)}
+                          >
+                            <div className="flex items-center">
+                              <div className="p-2 rounded-lg bg-gradient-to-r from-purple-600/20 to-blue-500/20 mr-3">
+                                <Car size={16} className="text-purple-400" />
+                              </div>
+                              <span>{model}</span>
+                            </div>
+                          </div>
+                        ))}
+                        <div
+                          className="p-4 hover:bg-white/10 cursor-pointer transition-colors duration-200"
+                          onClick={() => {
+                            setShowModelSuggestions(false);
+                          }}
+                        >
+                          <div className="flex items-center">
+                            <div className="p-2 rounded-lg bg-gradient-to-r from-green-600/20 to-emerald-500/20 mr-3">
+                              <Sparkles size={16} className="text-green-400" />
+                            </div>
+                            <span>Использовать "{formData.carModel}" как новую модель</span>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="p-4 text-center text-gray-400">
+                        Модели не найдены. Введите свое значение.
                       </div>
-                    ))}
-                    <div
-                      className="p-3 hover:bg-gray-700 cursor-pointer border-t border-gray-700"
-                      onClick={() => {
-                        setShowModelSuggestions(false);
-                      }}
-                    >
-                      Использовать "{formData.carModel}" как новую модель
-                    </div>
+                    )}
                   </div>
                 )}
               </div>

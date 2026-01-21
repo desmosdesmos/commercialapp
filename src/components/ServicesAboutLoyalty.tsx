@@ -37,7 +37,7 @@ const ServicesSection = () => {
   return (
     <div className="px-4 py-8">
       <h2 className="text-2xl font-bold mb-6 text-center">Наши услуги</h2>
-      <div className="space-y-4">
+      <div className="space-y-3">
         {services.map((service, index) => {
           const IconComponent = service.icon;
           return (
@@ -46,7 +46,7 @@ const ServicesSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index, duration: 0.4 }}
-              className="glass-card p-4"
+              className="glass-card p-5"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -55,7 +55,7 @@ const ServicesSection = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold">{service.name}</h3>
-                    <p className="text-xs text-gray-300">{service.description}</p>
+                    <p className="text-xs text-gray-300 mt-1">{service.description}</p>
                   </div>
                 </div>
                 <div className="text-right">
@@ -87,10 +87,10 @@ const AboutSection = () => {
           Наша команда состоит из опытных специалистов, которые знают толк в детализации и стремятся к идеальным результатам.
         </p>
       </div>
-      
+
       <h3 className="text-xl font-bold mb-4 text-center">Наши преимущества</h3>
-      <div className="space-y-4">
-        <div className="glass-card p-4 flex items-center">
+      <div className="space-y-3">
+        <div className="glass-card p-5 flex items-center">
           <div className="p-3 rounded-2xl bg-gradient-to-r from-purple-600/20 to-blue-500/20 mr-4">
             <Star size={20} className="text-purple-400" />
           </div>
@@ -99,8 +99,8 @@ const AboutSection = () => {
             <p className="text-xs text-gray-300">Опытные мастера с многолетним стажем</p>
           </div>
         </div>
-        
-        <div className="glass-card p-4 flex items-center">
+
+        <div className="glass-card p-5 flex items-center">
           <div className="p-3 rounded-2xl bg-gradient-to-r from-purple-600/20 to-blue-500/20 mr-4">
             <Shield size={20} className="text-purple-400" />
           </div>
@@ -109,8 +109,8 @@ const AboutSection = () => {
             <p className="text-xs text-gray-300">Гарантия на все виды работ</p>
           </div>
         </div>
-        
-        <div className="glass-card p-4 flex items-center">
+
+        <div className="glass-card p-5 flex items-center">
           <div className="p-3 rounded-2xl bg-gradient-to-r from-purple-600/20 to-blue-500/20 mr-4">
             <Sparkles size={20} className="text-purple-400" />
           </div>
@@ -139,29 +139,29 @@ const LoyaltySection = () => {
         <p className="text-gray-300 mb-4">
           За каждое посещение вы получаете 1 штамп. Соберите 10 штампов и получите 11-е посещение в подарок!
         </p>
-        
+
         <div className="w-full bg-gray-700 rounded-full h-4 mb-2">
-          <div 
-            className="bg-gradient-to-r from-purple-500 to-blue-400 h-4 rounded-full" 
+          <div
+            className="bg-gradient-to-r from-purple-500 to-blue-400 h-4 rounded-full"
             style={{ width: '30%' }}
           ></div>
         </div>
         <p className="text-sm text-gray-300">3/10 штампов собрано</p>
       </div>
-      
+
       <h3 className="text-xl font-bold mb-4 text-center">Уровни участия</h3>
-      <div className="space-y-4">
-        <div className="glass-card p-4">
+      <div className="space-y-3">
+        <div className="glass-card p-5">
           <h4 className="font-semibold text-blue-400 mb-2">Бронзовый уровень</h4>
           <p className="text-xs text-gray-300">Скидка 5% на все услуги</p>
         </div>
-        
-        <div className="glass-card p-4">
+
+        <div className="glass-card p-5">
           <h4 className="font-semibold text-gray-300 mb-2">Серебряный уровень</h4>
           <p className="text-xs text-gray-300">Скидка 10% на все услуги</p>
         </div>
-        
-        <div className="glass-card p-4">
+
+        <div className="glass-card p-5">
           <h4 className="font-semibold text-yellow-400 mb-2">Золотой уровень</h4>
           <p className="text-xs text-gray-300">Скидка 15% на все услуги + подарок на ДР</p>
         </div>

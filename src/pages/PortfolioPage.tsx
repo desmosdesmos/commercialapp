@@ -28,20 +28,20 @@ const PortfolioPage = () => {
           >
             <div className="flex">
               <div className="flex-1">
-                <h3 className="text-sm font-semibold p-2 text-center">До</h3>
+                <h3 className="text-sm font-semibold p-2 text-center bg-gradient-to-r from-purple-600/10 to-blue-500/10 rounded-t-lg">До</h3>
                 <img
                   src={item.before}
                   alt={`Before - ${item.alt}`}
-                  className="w-full h-32 object-cover rounded-lg cursor-pointer"
+                  className="w-full h-32 object-cover rounded-b-lg rounded-tr-lg cursor-pointer"
                   onClick={() => setSelectedImage(item.id)}
                 />
               </div>
               <div className="flex-1">
-                <h3 className="text-sm font-semibold p-2 text-center">После</h3>
+                <h3 className="text-sm font-semibold p-2 text-center bg-gradient-to-r from-blue-600/10 to-cyan-500/10 rounded-t-lg">После</h3>
                 <img
                   src={item.after}
                   alt={`After - ${item.alt}`}
-                  className="w-full h-32 object-cover rounded-lg cursor-pointer"
+                  className="w-full h-32 object-cover rounded-b-lg rounded-tl-lg cursor-pointer"
                   onClick={() => setSelectedImage(item.id)}
                 />
               </div>

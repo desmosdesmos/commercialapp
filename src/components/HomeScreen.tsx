@@ -71,6 +71,7 @@ const HomeScreen = ({ setActiveTab }: { setActiveTab: (tab: number) => void }) =
                   src="/logo.svg"
                   alt="Art Detailing Logo"
                   className="w-16 h-16 object-contain rounded-xl"
+                  style={{ filter: 'drop-shadow(0 0 8px rgba(139, 92, 246, 0.5))' }}
                 />
               </div>
             </div>
