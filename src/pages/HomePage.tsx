@@ -2,8 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Scissors, Image as ImageIcon, MapPin, Star, Gift } from 'lucide-react';
 
-const HomePage = () => {
-  // Action buttons data
+const HomePage = ({ setActiveTab }: { setActiveTab: (tab: number) => void }) => {
+  // Action buttons data - mapping to app tabs
   const actionButtons = [
     {
       id: 1,
@@ -11,7 +11,7 @@ const HomePage = () => {
       subtitle: 'Забронируйте удобное время',
       icon: Calendar,
       gradient: 'from-purple-600 to-blue-500',
-      path: '/booking'
+      tab: 1 // Navigate to Booking tab
     },
     {
       id: 2,
@@ -19,7 +19,7 @@ const HomePage = () => {
       subtitle: 'Посмотреть все услуги',
       icon: Scissors,
       gradient: 'from-blue-500 to-cyan-400',
-      path: '/services'
+      tab: 1 // Navigate to Booking tab where services are shown
     },
     {
       id: 3,
@@ -27,7 +27,7 @@ const HomePage = () => {
       subtitle: 'Наши лучшие работы',
       icon: ImageIcon,
       gradient: 'from-cyan-400 to-teal-400',
-      path: '/portfolio'
+      tab: 2 // Navigate to Portfolio tab
     },
     {
       id: 4,
@@ -35,7 +35,7 @@ const HomePage = () => {
       subtitle: 'Адрес и режим работы',
       icon: MapPin,
       gradient: 'from-teal-400 to-emerald-500',
-      path: '/contacts'
+      tab: 3 // Navigate to Contacts tab
     },
     {
       id: 5,
@@ -43,7 +43,7 @@ const HomePage = () => {
       subtitle: 'Специальные предложения',
       icon: Gift,
       gradient: 'from-emerald-500 to-green-500',
-      path: '/promotions'
+      tab: 1 // Navigate to Booking tab where promotions might be shown
     },
     {
       id: 6,
@@ -51,7 +51,7 @@ const HomePage = () => {
       subtitle: 'Качество и надежность',
       icon: Star,
       gradient: 'from-green-500 to-lime-500',
-      path: '/guarantee'
+      tab: 3 // Navigate to Contacts tab where guarantee info might be
     }
   ];
 
@@ -77,6 +77,7 @@ const HomePage = () => {
             <motion.button
               whileTap={{ scale: 0.95 }}
               className="glass-button bg-gradient-to-r from-purple-600 to-blue-500 text-white font-medium text-lg py-3 px-8"
+              onClick={() => setActiveTab(1)} // Navigate to Booking tab
             >
               Записаться онлайн
             </motion.button>
@@ -96,7 +97,8 @@ const HomePage = () => {
               transition={{ delay: 0.1 * index, duration: 0.4 }}
               whileHover={{ y: -5 }}
               whileTap={{ scale: 0.97 }}
-              className="glass-card p-4"
+              className="glass-card p-4 cursor-pointer"
+              onClick={() => setActiveTab(button.tab)}
             >
               <div className="flex items-center">
                 <div className={`p-3 rounded-2xl bg-gradient-to-r ${button.gradient} mr-4`}>
