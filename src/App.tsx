@@ -81,19 +81,11 @@ const App = () => {
                   }`}
                 >
                   {/* Active indicator with gradient */}
-                  <motion.div
-                    className={`absolute inset-0 rounded-2xl z-[-1] ${
-                      isActive
-                        ? 'bg-gradient-to-r from-purple-600/30 to-blue-500/30 opacity-100'
-                        : 'opacity-0'
-                    }`}
-                    initial={false}
-                    animate={{
-                      opacity: isActive ? 1 : 0,
-                      scale: isActive ? 1 : 0.95
-                    }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  />
+                  <div className={`absolute inset-0 rounded-2xl z-0 ${
+                    isActive
+                      ? 'bg-gradient-to-r from-purple-600/30 to-blue-500/30 opacity-100'
+                      : 'opacity-0'
+                  }`} />
 
                   <motion.div
                     animate={{
@@ -101,6 +93,7 @@ const App = () => {
                       scale: isActive ? 1.1 : 1
                     }}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    className="relative z-10"
                   >
                     <IconComponent
                       size={22}
@@ -108,7 +101,7 @@ const App = () => {
                     />
                   </motion.div>
                   <motion.span
-                    className="text-xs"
+                    className="text-xs relative z-10"
                     animate={{
                       fontSize: isActive ? "12px" : "10px",
                       fontWeight: isActive ? "bold" : "normal",
