@@ -64,17 +64,7 @@ const HomeScreen = ({ setActiveTab }: { setActiveTab: (tab: number) => void }) =
             transition={{ duration: 0.8 }}
             className="text-center mb-8"
           >
-            {/* Logo Container */}
-            <div className="flex justify-center mb-4">
-              <div className="p-2 rounded-2xl bg-gradient-to-r from-purple-600/20 to-blue-500/20 backdrop-blur-sm">
-                <img
-                  src="/logo.svg"
-                  alt="Art Detailing Logo"
-                  className="w-16 h-16 object-contain rounded-xl"
-                  style={{ filter: 'drop-shadow(0 0 8px rgba(139, 92, 246, 0.5))' }}
-                />
-              </div>
-            </div>
+            {/* Logo Container - Removed */}
             <h1 className="text-4xl md:text-5xl font-light tracking-widest mb-2 bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300 bg-clip-text text-transparent">
               ART DETAILING
             </h1>
