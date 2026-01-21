@@ -67,12 +67,9 @@ const HomeScreen = ({ setActiveTab }: { setActiveTab: (tab: number) => void }) =
             {/* Logo Container */}
             <div className="flex justify-center mb-4">
               <div className="p-2 rounded-2xl bg-gradient-to-r from-purple-600/20 to-blue-500/20 backdrop-blur-sm">
-                <img
-                  src="/logo.png"
-                  alt="Art Detailing Logo"
-                  className="w-16 h-16 object-contain rounded-xl"
-                  style={{ filter: 'drop-shadow(0 0 8px rgba(139, 92, 246, 0.5))' }}
-                />
+                <div className="w-16 h-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-purple-600/30 to-blue-500/30">
+                  <span className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">AD</span>
+                </div>
               </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-light tracking-widest mb-2 bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300 bg-clip-text text-transparent">
