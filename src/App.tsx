@@ -81,35 +81,42 @@ const App = () => {
                   }`}
                 >
                   {/* Active indicator with gradient */}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeTabIndicator"
-                      className="absolute inset-0 bg-gradient-to-r from-purple-600/30 to-blue-500/30 rounded-2xl z-[-1]"
-                      initial={false}
-                      transition={{
-                        type: "spring",
-                        stiffness: 300,
-                        damping: 30
-                      }}
-                    />
-                  )}
+                  <motion.div
+                    className={`absolute inset-0 rounded-2xl z-[-1] ${
+                      isActive
+                        ? 'bg-gradient-to-r from-purple-600/30 to-blue-500/30'
+                        : 'opacity-0'
+                    }`}
+                    initial={false}
+                    animate={{
+                      opacity: isActive ? 1 : 0,
+                      scale: isActive ? 1 : 0.95
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 30
+                    }}
+                  />
 
                   <motion.div
                     animate={{
                       y: isActive ? -5 : 0,
+                      scale: isActive ? 1.1 : 1
                     }}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   >
                     <IconComponent
                       size={22}
-                      className={isActive ? "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400" : ""}
+                      className={isActive ? "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400" : "text-gray-300"}
                     />
                   </motion.div>
                   <motion.span
                     className="text-xs"
                     animate={{
                       fontSize: isActive ? "12px" : "10px",
-                      fontWeight: isActive ? "bold" : "normal"
+                      fontWeight: isActive ? "bold" : "normal",
+                      y: isActive ? -2 : 0
                     }}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   >
