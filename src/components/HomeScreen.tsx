@@ -68,7 +68,7 @@ const HomeScreen = ({ setActiveTab }: { setActiveTab: (tab: number) => void }) =
             <div className="flex justify-center mb-4">
               <div className="p-2 rounded-2xl bg-gradient-to-r from-purple-600/20 to-blue-500/20 backdrop-blur-sm">
                 <img
-                  src="/logo-car.svg"
+                  src="/logo.png"
                   alt="Art Detailing Logo"
                   className="w-16 h-16 object-contain rounded-xl"
                   style={{ filter: 'drop-shadow(0 0 8px rgba(139, 92, 246, 0.5))' }}
