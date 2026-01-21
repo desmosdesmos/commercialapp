@@ -80,23 +80,53 @@ const App = () => {
                       : 'text-gray-300'
                   }`}
                 >
-                  {/* Active indicator with gradient */}
-                  <div className={`absolute inset-0 rounded-2xl ${
-                    isActive
-                      ? 'bg-gradient-to-r from-purple-600/30 to-blue-500/30'
-                      : 'bg-transparent'
-                  }`} />
+                  {/* Active indicator with smooth animation */}
+                  <div
+                    className={`absolute inset-0 rounded-2xl ${
+                      isActive
+                        ? 'bg-gradient-to-r from-purple-600/30 to-blue-500/30'
+                        : 'bg-transparent'
+                    }`}
+                    style={{
+                      transition: 'all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)'
+                    }}
+                  />
 
-                  <div className="flex flex-col items-center justify-center">
-                    <IconComponent
-                      size={22}
-                      className={isActive ? "text-white" : "text-gray-300"}
-                    />
-                    <span className={`text-xs mt-1 ${
-                      isActive ? 'font-bold text-white' : 'text-gray-300'
-                    }`}>
+                  <div className="flex flex-col items-center justify-center relative z-10">
+                    <motion.div
+                      animate={{
+                        y: isActive ? -5 : 0,
+                        scale: isActive ? 1.1 : 1
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 25,
+                        mass: 1
+                      }}
+                      className="flex items-center justify-center"
+                    >
+                      <IconComponent
+                        size={22}
+                        className={isActive ? "text-white" : "text-gray-300"}
+                      />
+                    </motion.div>
+                    <motion.span
+                      className={`text-xs mt-1 ${
+                        isActive ? 'font-bold text-white' : 'text-gray-300'
+                      }`}
+                      animate={{
+                        fontSize: isActive ? "12px" : "10px",
+                        fontWeight: isActive ? "bold" : "normal"
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 25
+                      }}
+                    >
                       {tab.label}
-                    </span>
+                    </motion.span>
                   </div>
                 </motion.button>
               );
