@@ -170,14 +170,7 @@ const LoyaltySection = () => {
   );
 };
 
-const ServicesAboutLoyalty = () => {
-  return (
-    <div className="pb-24">
-      <ServicesSection />
-      <AboutSection />
-      <LoyaltySection />
-    </div>
-  );
-};
+// Separate components for each section
+export { ServicesSection, AboutSection, LoyaltySection };
 
 export default ServicesAboutLoyalty;

@@ -32,8 +32,7 @@ const SERVICES = [
   { id: 2, name: 'Нанесение керамики', basePrice: 12000, icon: Scissors },
   { id: 3, name: 'Химчистка салона', basePrice: 4000, icon: Scissors },
   { id: 4, name: 'Стандартная мойка', basePrice: 1500, icon: Scissors },
-  { id: 5, name: 'Детская химчистка', basePrice: 8000, icon: Scissors },
-  { id: 6, name: 'Обработка фар', basePrice: 2500, icon: Scissors },
+  { id: 5, name: 'Обработка фар', basePrice: 2500, icon: Scissors },
 ];
 
 const BookingPage = () => {
@@ -50,6 +49,10 @@ const BookingPage = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [availableModels, setAvailableModels] = useState<string[]>([]);
   const [isTelegramUser, setIsTelegramUser] = useState(false);
+  const [showBrandSuggestions, setShowBrandSuggestions] = useState(false);
+  const [showModelSuggestions, setShowModelSuggestions] = useState(false);
+  const [filteredBrands, setFilteredBrands] = useState<string[]>([]);
+  const [filteredModels, setFilteredModels] = useState<string[]>([]);
 
   // Simulate getting user data from Telegram
   useEffect(() => {
@@ -80,19 +83,64 @@ const BookingPage = () => {
     }
   }, [formData.carBrand]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
-    // Reset model when brand changes
     if (name === 'carBrand') {
       setFormData(prev => ({
         ...prev,
         [name]: value,
         carModel: '' // Reset model when brand changes
       }));
+
+      // Filter brands based on input
+      if (value.trim()) {
+        const filtered = Object.keys(CAR_DATABASE).filter(brand =>
+          brand.toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredBrands(filtered);
+        setShowBrandSuggestions(true);
+      } else {
+        setShowBrandSuggestions(false);
+      }
+    } else if (name === 'carModel') {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+
+      // Filter models based on input
+      if (value.trim() && formData.carBrand) {
+        const brandModels = CAR_DATABASE[formData.carBrand as keyof typeof CAR_DATABASE] || [];
+        const filtered = brandModels.filter(model =>
+          model.toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredModels(filtered);
+        setShowModelSuggestions(true);
+      } else {
+        setShowModelSuggestions(false);
+      }
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
     }
+  };
+
+  const handleBrandSelect = (brand: string) => {
+    setFormData(prev => ({
+      ...prev,
+      carBrand: brand,
+      carModel: '' // Reset model when brand changes
+    }));
+    setAvailableModels(CAR_DATABASE[brand as keyof typeof CAR_DATABASE] || []);
+    setShowBrandSuggestions(false);
+  };
+
+  const handleModelSelect = (model: string) => {
+    setFormData(prev => ({
+      ...prev,
+      carModel: model
+    }));
+    setShowModelSuggestions(false);
   };
 
   // Calculate price based on service, car class and brand/model
@@ -134,74 +182,105 @@ const BookingPage = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="space-y-5">
-            {/* Car Brand Selection */}
-            <div>
+            {/* Car Brand Input with Suggestions */}
+            <div className="relative">
               <label className="block text-sm font-medium mb-2">Марка автомобиля</label>
               <div className="relative">
-                <select
+                <input
+                  type="text"
                   name="carBrand"
                   value={formData.carBrand}
-                  onChange={handleChange}
-                  className="w-full bg-transparent border-b border-gray-600 focus:border-white focus:outline-none py-3 px-4 pr-10 text-white appearance-none"
-                >
-                  <option value="" className="bg-gray-800">Выберите марку</option>
-                  {Object.keys(CAR_DATABASE).map(brand => (
-                    <option key={brand} value={brand} className="bg-gray-800">
-                      {brand}
-                    </option>
-                  ))}
-                </select>
-                <svg
-                  className="absolute right-3 top-4 text-gray-400 pointer-events-none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
+                  onChange={handleInputChange}
+                  onFocus={() => {
+                    if (formData.carBrand.trim()) {
+                      const filtered = Object.keys(CAR_DATABASE).filter(brand =>
+                        brand.toLowerCase().includes(formData.carBrand.toLowerCase())
+                      );
+                      setFilteredBrands(filtered);
+                      setShowBrandSuggestions(true);
+                    }
+                  }}
+                  onBlur={() => setTimeout(() => setShowBrandSuggestions(false), 200)}
+                  placeholder="Введите марку или выберите из списка"
+                  className="w-full bg-transparent border-b border-gray-600 focus:border-white focus:outline-none py-3 px-4 pr-10 text-white"
+                />
+                <Car className="absolute right-3 top-3.5 text-gray-400" size={18} />
+
+                {/* Brand Suggestions Dropdown */}
+                {showBrandSuggestions && filteredBrands.length > 0 && (
+                  <div className="absolute z-10 w-full mt-1 bg-gray-800 border border-gray-700 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                    {filteredBrands.map(brand => (
+                      <div
+                        key={brand}
+                        className="p-3 hover:bg-gray-700 cursor-pointer"
+                        onClick={() => handleBrandSelect(brand)}
+                      >
+                        {brand}
+                      </div>
+                    ))}
+                    <div
+                      className="p-3 hover:bg-gray-700 cursor-pointer border-t border-gray-700"
+                      onClick={() => {
+                        setShowBrandSuggestions(false);
+                      }}
+                    >
+                      Использовать "{formData.carBrand}" как новую марку
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Car Model Selection */}
-            <div>
+            {/* Car Model Input with Suggestions */}
+            <div className="relative">
               <label className="block text-sm font-medium mb-2">Модель автомобиля</label>
               <div className="relative">
-                <select
+                <input
+                  type="text"
                   name="carModel"
                   value={formData.carModel}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
+                  onFocus={() => {
+                    if (formData.carModel.trim() && formData.carBrand) {
+                      const brandModels = CAR_DATABASE[formData.carBrand as keyof typeof CAR_DATABASE] || [];
+                      const filtered = brandModels.filter(model =>
+                        model.toLowerCase().includes(formData.carModel.toLowerCase())
+                      );
+                      setFilteredModels(filtered);
+                      setShowModelSuggestions(true);
+                    }
+                  }}
+                  onBlur={() => setTimeout(() => setShowModelSuggestions(false), 200)}
                   disabled={!formData.carBrand}
-                  className={`w-full bg-transparent border-b border-gray-600 focus:border-white focus:outline-none py-3 px-4 pr-10 text-white appearance-none ${
+                  placeholder="Введите модель или выберите из списка"
+                  className={`w-full bg-transparent border-b border-gray-600 focus:border-white focus:outline-none py-3 px-4 pr-10 text-white ${
                     !formData.carBrand ? 'opacity-50' : ''
                   }`}
-                >
-                  <option value="" className="bg-gray-800">Выберите модель</option>
-                  {availableModels.map(model => (
-                    <option key={model} value={model} className="bg-gray-800">
-                      {model}
-                    </option>
-                  ))}
-                </select>
-                <svg
-                  className="absolute right-3 top-4 text-gray-400 pointer-events-none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
+                />
+                <Car className="absolute right-3 top-3.5 text-gray-400" size={18} />
+
+                {/* Model Suggestions Dropdown */}
+                {showModelSuggestions && filteredModels.length > 0 && (
+                  <div className="absolute z-10 w-full mt-1 bg-gray-800 border border-gray-700 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                    {filteredModels.map(model => (
+                      <div
+                        key={model}
+                        className="p-3 hover:bg-gray-700 cursor-pointer"
+                        onClick={() => handleModelSelect(model)}
+                      >
+                        {model}
+                      </div>
+                    ))}
+                    <div
+                      className="p-3 hover:bg-gray-700 cursor-pointer border-t border-gray-700"
+                      onClick={() => {
+                        setShowModelSuggestions(false);
+                      }}
+                    >
+                      Использовать "{formData.carModel}" как новую модель
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -212,7 +291,7 @@ const BookingPage = () => {
                 <select
                   name="carClass"
                   value={formData.carClass}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
                   className="w-full bg-transparent border-b border-gray-600 focus:border-white focus:outline-none py-3 px-4 pr-10 text-white appearance-none"
                 >
                   <option value="sedan" className="bg-gray-800">Седан</option>
@@ -243,7 +322,7 @@ const BookingPage = () => {
                 <select
                   name="service"
                   value={formData.service}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
                   className="w-full bg-transparent border-b border-gray-600 focus:border-white focus:outline-none py-3 px-4 pr-10 text-white appearance-none"
                 >
                   <option value="" className="bg-gray-800">Выберите услугу</option>
@@ -294,7 +373,7 @@ const BookingPage = () => {
                   type="text"
                   name="name"
                   value={formData.name}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
                   placeholder="Ваше имя"
                   className="w-full bg-transparent border-b border-gray-600 focus:border-white focus:outline-none py-3 px-4 pr-10 text-white"
                 />
@@ -313,7 +392,7 @@ const BookingPage = () => {
                   type="tel"
                   name="phone"
                   value={formData.phone}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
                   placeholder="+7 (___) ___-__-__"
                   className="w-full bg-transparent border-b border-gray-600 focus:border-white focus:outline-none py-3 px-4 pr-10 text-white"
                 />
@@ -332,7 +411,7 @@ const BookingPage = () => {
                   type="datetime-local"
                   name="dateTime"
                   value={formData.dateTime}
-                  onChange={handleChange}
+                  onChange={handleInputChange}
                   className="w-full bg-transparent border-b border-gray-600 focus:border-white focus:outline-none py-3 px-4 pr-10 text-white"
                 />
                 <CalendarIcon className="absolute right-3 top-3.5 text-gray-400" size={18} />

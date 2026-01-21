@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, Image as ImageIcon, MapPin, Info, ChevronRight, X } from 'lucide-react';
-import ServicesAboutLoyalty from './ServicesAboutLoyalty';
+import { ServicesSection, AboutSection, LoyaltySection } from './ServicesAboutLoyalty';
 
 const HomeScreen = ({ setActiveTab }: { setActiveTab: (tab: number) => void }) => {
   const [showExtendedContent, setShowExtendedContent] = useState<string | null>(null);
@@ -15,8 +15,10 @@ const HomeScreen = ({ setActiveTab }: { setActiveTab: (tab: number) => void }) =
   ];
 
   const handleItemClick = (action: string, tab: number) => {
-    if (action === 'services' || action === 'about') {
-      setShowExtendedContent(action);
+    if (action === 'services') {
+      setShowExtendedContent('services');
+    } else if (action === 'about') {
+      setShowExtendedContent('about');
     } else if (action === 'portfolio') {
       setActiveTab(2);
     } else if (action === 'contacts') {
@@ -45,7 +47,13 @@ const HomeScreen = ({ setActiveTab }: { setActiveTab: (tab: number) => void }) =
               <X size={20} />
             </motion.button>
           </div>
-          <ServicesAboutLoyalty />
+          {showExtendedContent === 'services' && <ServicesSection />}
+          {showExtendedContent === 'about' && (
+            <div className="pb-24">
+              <AboutSection />
+              <LoyaltySection />
+            </div>
+          )}
         </div>
       ) : (
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-12">
