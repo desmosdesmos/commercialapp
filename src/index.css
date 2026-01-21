@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .glass-container {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl;
+  }
+
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6;
+  }
+
+  .glass-button {
+    @apply bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl px-6 py-3 text-white transition-all duration-300 hover:bg-white/20 active:scale-95;
+  }
+
+  .floating-nav {
+    @apply bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl px-6 py-4 flex justify-around items-center;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-slate-900/20;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .disable-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}

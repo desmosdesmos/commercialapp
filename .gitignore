@@ -1,0 +1,71 @@
+# Dependencies
+node_modules/
+
+# Production builds
+dist/
+build/
+
+# Environment variables
+.env*
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# Temporary folders
+tmp/
+temp/
+
+# Next.js
+.next
+
+# Nuxt.js
+.nuxt
+
+# Vuepress
+.vuepress/dist
+
+# Serverless
+.serverless/
+
+# FuseBox
+.fusebox/
+
+# Docusaurus
+.docusaurus
+
+# TSDX
+.tsdx-cache
+
+# Parcel
+.cache/
+
+# PnP
+.pnp/
+
+# Jekyll
+_site
+
+# ESLint
+.eslintcache
+
+# Yarn
+.yarn/
+.yarnrc.yml
+
+# pnpm
+pnpm-lock.yaml
