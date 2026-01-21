@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Home, Calendar, Image, Phone, Scissors, Star, Gift } from 'lucide-react';
 
 // Import individual pages
-import HomePage from './pages/HomePage';
+import HomeScreen from './components/HomeScreen';
 import BookingPage from './pages/BookingPage';
 import PortfolioPage from './pages/PortfolioPage';
 import ContactsPage from './pages/ContactsPage';
@@ -13,7 +13,7 @@ const App = () => {
 
   // Define tabs with their properties
   const tabs = [
-    { id: 0, label: 'Услуги', icon: Scissors },
+    { id: 0, label: 'Главная', icon: Home },
     { id: 1, label: 'Бронь', icon: Calendar },
     { id: 2, label: 'Портфолио', icon: Image },
     { id: 3, label: 'Контакты', icon: Phone },
@@ -23,7 +23,7 @@ const App = () => {
   const renderPage = () => {
     switch (activeTab) {
       case 0:
-        return <HomePage setActiveTab={setActiveTab} />;
+        return <HomeScreen />;
       case 1:
         return <BookingPage />;
       case 2:
@@ -31,7 +31,7 @@ const App = () => {
       case 3:
         return <ContactsPage />;
       default:
-        return <HomePage setActiveTab={setActiveTab} />;
+        return <HomeScreen />;
     }
   };
 
