@@ -84,7 +84,7 @@ const App = () => {
                   <motion.div
                     className={`absolute inset-0 rounded-2xl z-[-1] ${
                       isActive
-                        ? 'bg-gradient-to-r from-purple-600/30 to-blue-500/30'
+                        ? 'bg-gradient-to-r from-purple-600/30 to-blue-500/30 opacity-100'
                         : 'opacity-0'
                     }`}
                     initial={false}
@@ -92,11 +92,7 @@ const App = () => {
                       opacity: isActive ? 1 : 0,
                       scale: isActive ? 1 : 0.95
                     }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 30
-                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
 
                   <motion.div
