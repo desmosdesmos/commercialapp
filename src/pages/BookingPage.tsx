@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Car, User, Phone as PhoneIcon, Calendar as CalendarIcon, Clock, Scissors } from 'lucide-react';
+import { Car, User, Phone as PhoneIcon, Calendar as CalendarIcon, Clock, Scissors, Sparkles } from 'lucide-react';
 
 // Car brands and models database
 const CAR_DATABASE: Record<string, string[]> = {
