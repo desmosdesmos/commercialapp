@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Car, User, Phone as PhoneIcon, Calendar as CalendarIcon, Clock, Scissors } from 'lucide-react';
 
 // Car brands and models database
-const CAR_DATABASE = {
+const CAR_DATABASE: Record<string, string[]> = {
   'BMW': ['X3', 'X5', 'X6', '3 Series', '5 Series', '7 Series', 'M3', 'M5'],
   'Mercedes-Benz': ['C-Class', 'E-Class', 'S-Class', 'GLA', 'GLC', 'GLE', 'GLS', 'AMG GT'],
   'Audi': ['A3', 'A4', 'A6', 'A8', 'Q3', 'Q5', 'Q7', 'Q8', 'R8'],
@@ -73,8 +73,8 @@ const BookingPage = () => {
 
   // Update models when brand changes
   useEffect(() => {
-    if (formData.carBrand && CAR_DATABASE[formData.carBrand]) {
-      setAvailableModels(CAR_DATABASE[formData.carBrand]);
+    if (formData.carBrand && CAR_DATABASE[formData.carBrand as keyof typeof CAR_DATABASE]) {
+      setAvailableModels(CAR_DATABASE[formData.carBrand as keyof typeof CAR_DATABASE]);
     } else {
       setAvailableModels([]);
     }
@@ -96,7 +96,7 @@ const BookingPage = () => {
   };
 
   // Calculate price based on service, car class and brand/model
-  const calculatePrice = () => {
+  const calculatePrice = (): number => {
     if (!formData.service) return 0;
 
     const selectedService = SERVICES.find(s => s.id.toString() === formData.service);
