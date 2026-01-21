@@ -23,7 +23,7 @@ const App = () => {
   const renderPage = () => {
     switch (activeTab) {
       case 0:
-        return <HomeScreen />;
+        return <HomeScreen setActiveTab={setActiveTab} />;
       case 1:
         return <BookingPage />;
       case 2:
@@ -31,7 +31,7 @@ const App = () => {
       case 3:
         return <ContactsPage />;
       default:
-        return <HomeScreen />;
+        return <HomeScreen setActiveTab={setActiveTab} />;
     }
   };
 
