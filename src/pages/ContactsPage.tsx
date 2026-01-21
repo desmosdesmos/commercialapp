@@ -72,10 +72,17 @@ const ContactsPage = () => {
         className="glass-card overflow-hidden rounded-3xl"
       >
         <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-          <div className="text-center">
-            <MapPin className="mx-auto text-blue-400" size={48} />
-            <p className="mt-2 text-gray-300">Карта местоположения</p>
-          </div>
+          <a
+            href="https://yandex.ru/maps/-/CLtJqW-S"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full h-full flex items-center justify-center"
+          >
+            <div className="text-center">
+              <MapPin className="mx-auto text-blue-400" size={48} />
+              <p className="mt-2 text-gray-300">Нажмите, чтобы открыть карту</p>
+            </div>
+          </a>
         </div>
       </motion.div>
     </div>
