@@ -83,34 +83,34 @@ const App = () => {
                   {/* Active indicator with gradient */}
                   <div className={`absolute inset-0 rounded-2xl z-0 ${
                     isActive
-                      ? 'bg-gradient-to-r from-purple-600/30 to-blue-500/30 opacity-100'
-                      : 'opacity-0'
+                      ? 'bg-gradient-to-r from-purple-600/30 to-blue-500/30'
+                      : 'bg-transparent'
                   }`} />
 
-                  <motion.div
-                    animate={{
-                      y: isActive ? -5 : 0,
-                      scale: isActive ? 1.1 : 1
-                    }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    className="relative z-10"
-                  >
-                    <IconComponent
-                      size={22}
-                      className={isActive ? "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400" : "text-gray-300"}
-                    />
-                  </motion.div>
-                  <motion.span
-                    className="text-xs relative z-10"
-                    animate={{
-                      fontSize: isActive ? "12px" : "10px",
-                      fontWeight: isActive ? "bold" : "normal",
-                      y: isActive ? -2 : 0
-                    }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  >
-                    {tab.label}
-                  </motion.span>
+                  <div className="relative z-10 flex flex-col items-center">
+                    <motion.div
+                      animate={{
+                        y: isActive ? -5 : 0,
+                        scale: isActive ? 1.1 : 1
+                      }}
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    >
+                      <IconComponent
+                        size={22}
+                        className={isActive ? "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400" : "text-gray-300"}
+                      />
+                    </motion.div>
+                    <motion.span
+                      className="text-xs mt-1"
+                      animate={{
+                        fontSize: isActive ? "12px" : "10px",
+                        fontWeight: isActive ? "bold" : "normal"
+                      }}
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    >
+                      {tab.label}
+                    </motion.span>
+                  </div>
                 </motion.button>
               );
             })}
